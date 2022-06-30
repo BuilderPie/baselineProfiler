@@ -35,7 +35,7 @@ CCLE_Data = {
     'Proteomics':os.path.join(CCLE_COMPUTE,'proteomics','protein_normalized.csv'),
     'Proteomics_rownames':os.path.join(CCLE_COMPUTE,'proteomics', 'protein_normalized_rownames.csv'),
     'Proteomics_colnames':os.path.join(CCLE_COMPUTE,'proteomics', 'protein_normalized_colnames.csv'),
-    'Proteomics_meta':os.path.join(CCLE_COMPUTE, 'sample_info', 'sample_info_Proteomics.csv'),
+    'Proteomics_meta':os.path.join(CCLE_COMPUTE, 'sample_info', 'sample_info_proteomics.csv'),
 
     
     # 'copy_number': os.path.join(CCLE_COMPUTE, 'copy_number'),
