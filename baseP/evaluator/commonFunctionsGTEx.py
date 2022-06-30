@@ -72,6 +72,12 @@ def fetchSig_val_by_index(gene_ind, exprsn_type, cohort, output, logger, name, d
                 
                 df_tissue = pd.DataFrame(data = rows).T
                 df_tissue.columns = gene_name
+
+                # convert to log2(1+value)
+                df_tissue += 1
+                df_tissue = df_tissue.applymap(np.log2)
+
+
                 
                 df_tissue.insert(0, "cell_line",  tissue_name, True)
                 df_tissue.insert(1, "lineage",  cohort, True)

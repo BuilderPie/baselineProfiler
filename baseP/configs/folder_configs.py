@@ -7,17 +7,23 @@ def formOutput(output):
        os.path.join(output, 'CCLE_evaluator', 'tables', 'JSON'),
        os.path.join(output, 'CCLE_evaluator', 'Exprsn'),
        os.path.join(output, 'CCLE_evaluator', 'Exprsn', 'tables'),
+       os.path.join(output, 'CCLE_evaluator', 'Exprsn', 'plots'),
        os.path.join(output, 'CCLE_evaluator', 'Proteomics'),
        os.path.join(output, 'CCLE_evaluator', 'Proteomics', 'tables'),
+       os.path.join(output, 'CCLE_evaluator', 'Proteomics', 'plots'),
        os.path.join(output, 'CCLE_evaluator', 'CRISPR_Broad'),
        os.path.join(output, 'CCLE_evaluator', 'CRISPR_Broad', 'tables'),
+       os.path.join(output, 'CCLE_evaluator', 'CRISPR_Broad', 'plots'),
 
        os.path.join(output, 'GTEx_evaluator'),
        os.path.join(output, 'GTEx_evaluator', 'Exprsn'),
        os.path.join(output, 'GTEx_evaluator', 'Exprsn', 'tables'),
+       os.path.join(output, 'GTEx_evaluator', 'Exprsn', 'plots'),
 
        os.path.join(output, 'HPA_evaluator'),
-       os.path.join(output, 'HPA_evaluator', 'tables'),
+       os.path.join(output, 'HPA_evaluator', 'Exprsn'),
+       os.path.join(output, 'HPA_evaluator', 'Exprsn', 'tables'),
+       os.path.join(output, 'HPA_evaluator', 'Exprsn', 'plots'),
        
        
        ### html report
