@@ -63,8 +63,22 @@ CCLE_show_lineages = {
 }
 
 
-
-
+#################### GTEx lineage SETTING to be plotted ####################
+GTEx_show_lineages = {
+    "Exprsn": [
+        "Blood",
+        "Brain",
+        "Breast",
+        "Colon",
+        "Heart",
+        "Liver",
+        "Lung",
+        "Nerve",
+        "Skin",
+        "Small Intestine",
+        "Spleen"
+    ]
+}
 
 
 

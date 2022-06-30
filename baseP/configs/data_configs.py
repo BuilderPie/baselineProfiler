@@ -44,8 +44,15 @@ CCLE_Data = {
 #         os.makedirs(CCLE_Data['Exprsn'])   # create CCLE Exprsn if it doesn't exists at the beginning
 # CCLE_Data['Datasets'] = [x for x in os.listdir(CCLE_Data['Exprsn']) if not x.startswith('.')]
 
+#################### GTEx SETTING####################
+GTEx_COMPUTE = os.path.join(DATA_COMPUTE, 'GTEx')
+GTEx_Data = {
+    'Exprsn':  os.path.join(GTEx_COMPUTE, 'data_subset'),
+    'Exprsn_rownames':  os.path.join(GTEx_COMPUTE, 'sample_info', 'gene_name.csv'),
+}
 
 
+#################### post HTML SETTING####################
 HTML_DIR = os.path.join(DATA_DIR, 'Annotation', 'html_template')
 HTML_Data = {
     'Template': os.path.join(HTML_DIR, 'report_template.html'),

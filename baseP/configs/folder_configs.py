@@ -13,7 +13,8 @@ def formOutput(output):
        os.path.join(output, 'CCLE_evaluator', 'CRISPR_Broad', 'tables'),
 
        os.path.join(output, 'GTEx_evaluator'),
-       os.path.join(output, 'GTEx_evaluator', 'tables'),
+       os.path.join(output, 'GTEx_evaluator', 'Exprsn'),
+       os.path.join(output, 'GTEx_evaluator', 'Exprsn', 'tables'),
 
        os.path.join(output, 'HPA_evaluator'),
        os.path.join(output, 'HPA_evaluator', 'tables'),

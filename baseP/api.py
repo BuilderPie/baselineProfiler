@@ -3,7 +3,7 @@
 # License           : MIT
 # Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
 # Date              : 06/23/2022
-# Last Modified Date: 06/23/2022
+# Last Modified Date: 06/29/2022
 # Last Modified By  : Dian Li <dianli@wustl.edu>
 # -*- coding: utf-8 -*-
 
@@ -15,6 +15,7 @@ import pandas as pd
 # import baseP.utils.pyUtils as utils
 # from baseP.evaluator import CCLE 
 import baseP.evaluator.CCLE as CCLE 
+import baseP.evaluator.GTEx as GTEx
 # from baseP import R_RMD
 # from baseP.utils import postProcess
 
@@ -81,6 +82,12 @@ def geneset(request,logger_P, name, threads, evaluators, resum, weights):
         logger.info('Start evaluating association of input gene list in CCLE data.')
         CCLE.analyze(data, cell_line, output=os.path.join(request['output'],'CCLE_evaluator'), logger=logger, name=name, threads= threads)
         logger_P.info('Successfully finish CCLE evaluator.')
+    
+    if 'GTEx' in evaluators:
+        logger = logger_P.getChild('[GTEx]')
+        logger.info('Start evaluating association of input gene list in GTEx data.')
+        GTEx.analyze(data, cell_line, output=os.path.join(request['output'],'GTEx_evaluator'), logger=logger, name=name, threads= threads)
+        logger_P.info('Successfully finish GTEx evaluator.')
 
 
     # if 'Crispr' in evaluators:
