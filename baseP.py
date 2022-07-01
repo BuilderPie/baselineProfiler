@@ -29,8 +29,8 @@ if __name__ == "__main__":
                         help="resume the process")
     parser.add_argument('-t','--threads',default=4,type=int,help='Number of threads')
     parser.add_argument('-o', '--output', default='inputed sig_name',type=str, help="Output directory")
-    # parser.add_argument('--html_modules', nargs='+', default=[
-    #                     'CCLE', 'Crispr', 'NonICB', 'ICB', 'scNonICB', 'scICB', 'Syngeneic'], help = "modules user selects to view in html")
+    parser.add_argument('--html_modules', nargs='+', default=[
+                        'CCLE', 'GTEx'], help = "modules user selects to view in html")
     
 
     args = parser.parse_args()
@@ -122,6 +122,7 @@ if __name__ == "__main__":
     # api.geneset(request=request, logger_P=geneset_logger,
     #             evaluators=args.evaluators, name=args.sig_name, resum=args.resum, threads=args.threads, html_modules = args.html_modules, weights = weights)
     api.geneset(request=request, logger_P=geneset_logger,
-                evaluators=args.evaluators, name=args.sig_name, resum=args.resum, threads=args.threads, weights = weights)
+                evaluators=args.evaluators, name=args.sig_name, html_modules = args.html_modules,
+                resum=args.resum, threads=args.threads, weights = weights)
     print('All results are at: ', os.path.abspath(args.output ))
 

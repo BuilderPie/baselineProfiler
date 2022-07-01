@@ -17,7 +17,7 @@ import pandas as pd
 import baseP.evaluator.CCLE as CCLE 
 import baseP.evaluator.GTEx as GTEx
 # from baseP import R_RMD
-# from baseP.utils import postProcess
+from baseP.utils import postProcess
 
 
 from baseP.configs.data_configs import DATA_DIR
@@ -25,7 +25,7 @@ from baseP.configs.data_configs import DATA_DIR
 from baseP.configs.folder_configs import formOutput
 
 # def geneset(request,logger_P, name, threads, evaluators, resum, html_modules, weights):
-def geneset(request,logger_P, name, threads, evaluators, resum, weights):
+def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, weights):
     ''' Evaluate gene signature composite of a list of gene '''
     
     formOutput(request['output'])
@@ -105,8 +105,8 @@ def geneset(request,logger_P, name, threads, evaluators, resum, weights):
 
          
 
-    # if ('post' in evaluators) or ('Post' in evaluators) :
-    #     logger = logger_P.getChild('[Post Process]')
-    #     logger.info('Start output data post processing')
-    #     postProcess.analyze(data, request=request, logger=logger, name=name, threads=threads, modules_selected=html_modules, weights = weights)
-    #     logger_P.info('Successfully finish data post processing')
+    if ('post' in evaluators) or ('Post' in evaluators) :
+        logger = logger_P.getChild('[Post Process]')
+        logger.info('Start output data post processing')
+        postProcess.analyze(data, request=request, logger=logger, name=name, threads=threads, modules_selected=html_modules, weights = weights)
+        logger_P.info('Successfully finish data post processing')

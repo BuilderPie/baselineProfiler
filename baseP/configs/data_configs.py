@@ -55,10 +55,8 @@ GTEx_Data = {
 #################### post HTML SETTING####################
 HTML_DIR = os.path.join(DATA_DIR, 'Annotation', 'html_template')
 HTML_Data = {
-    'Template': os.path.join(HTML_DIR, 'report_template.html'),
     'CSS': os.path.join(HTML_DIR, 'style.css'),
-    'meta': os.path.join(HTML_DIR, 'meta'),
-    'sub_modules': os.path.join(HTML_DIR, 'sub_modules'),
+    'site_libs': os.path.join(HTML_DIR, 'site_libs'),
 }
 
 EMAIL_DIR = os.path.join(DATA_DIR, 'Annotation', 'email_config')

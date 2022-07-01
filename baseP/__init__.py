@@ -48,7 +48,6 @@ CCLE_show_lineages = {
         "skin"
     ],
     "Proteomics": [
-       "Acute Myeloid Leukemia",
        "Bone",
        "Breast",
        "Central Nervous System",

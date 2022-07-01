@@ -28,6 +28,15 @@ def formOutput(output):
        
        ### html report
         os.path.join(output, 'html'),
+        os.path.join(output, 'html', 'figs'),
+        os.path.join(output, 'html', 'figs', 'CCLE_evaluator'),
+        os.path.join(output, 'html', 'figs', 'CCLE_evaluator', 'Exprsn'),
+        os.path.join(output, 'html', 'figs', 'CCLE_evaluator', 'Proteomics'),
+        os.path.join(output, 'html', 'figs', 'CCLE_evaluator', 'CRISPR_Broad'),
+
+        os.path.join(output, 'html', 'figs', 'GTEx_evaluator'),
+        os.path.join(output, 'html', 'figs', 'GTEx_evaluator', 'Exprsn'),
+
         os.path.join(output, 'meta'),
         os.path.join(output, 'meta', 'tables'),
         os.path.join(output, 'meta', 'tables', 'JSON'),
