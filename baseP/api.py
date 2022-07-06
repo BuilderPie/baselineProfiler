@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/23/2022
-# Last Modified Date: 06/29/2022
-# Last Modified By  : Dian Li <dianli@wustl.edu>
+# Last Modified Date: 07/05/2022
+# Last Modified By  : Dian Li
 # -*- coding: utf-8 -*-
 
 import os
@@ -16,6 +16,7 @@ import pandas as pd
 # from baseP.evaluator import CCLE 
 import baseP.evaluator.CCLE as CCLE 
 import baseP.evaluator.GTEx as GTEx
+import baseP.evaluator.HPA as HPA
 # from baseP import R_RMD
 from baseP.utils import postProcess
 
@@ -88,6 +89,12 @@ def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, we
         logger.info('Start evaluating association of input gene list in GTEx data.')
         GTEx.analyze(data, cell_line, output=os.path.join(request['output'],'GTEx_evaluator'), logger=logger, name=name, threads= threads)
         logger_P.info('Successfully finish GTEx evaluator.')
+    
+    if 'HPA' in evaluators:
+        logger = logger_P.getChild('[HPA]')
+        logger.info('Start evaluating association of input gene list in HPA data.')
+        HPA.analyze(data, cell_line, output=os.path.join(request['output'],'HPA_evaluator'), logger=logger, name=name, threads= threads)
+        logger_P.info('Successfully finish HPA evaluator.')
 
 
     # if 'Crispr' in evaluators:

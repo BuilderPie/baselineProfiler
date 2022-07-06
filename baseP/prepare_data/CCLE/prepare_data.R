@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 path = "../../../static/data/CCLE/"
 outputPath = "../../../static/data_computed/CCLE/"
 

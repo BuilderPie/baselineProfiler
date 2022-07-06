@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/21/2022
 # Last Modified Date: 06/21/2022
-# Last Modified By  : Dian Li <dianli@wustl.edu>
+# Last Modified By  : Dian Li 
 import os
 import baseP.configs.dirpath
 STATIC_DIR = baseP.configs.dirpath.static
@@ -49,6 +49,20 @@ GTEx_COMPUTE = os.path.join(DATA_COMPUTE, 'GTEx')
 GTEx_Data = {
     'Exprsn':  os.path.join(GTEx_COMPUTE, 'data_subset'),
     'Exprsn_rownames':  os.path.join(GTEx_COMPUTE, 'sample_info', 'gene_name.csv'),
+}
+
+#################### GTEx SETTING####################
+HPA_COMPUTE = os.path.join(DATA_COMPUTE, 'HPA')
+HPA_Data = {
+    'Exprsn_cell_line':  os.path.join(HPA_COMPUTE, 'Exprsn_cell_line', "rna_celline_log2_nTPM.csv"),
+    'Exprsn_cell_line_rownames':  os.path.join(HPA_COMPUTE, 'Exprsn_cell_line', 'rna_celline_rownames.csv'),
+    'Exprsn_cell_line_colnames':  os.path.join(HPA_COMPUTE, 'Exprsn_cell_line', 'rna_celline_colnames.csv'),
+
+    'Exprsn_blood_cell':  os.path.join(HPA_COMPUTE, 'Exprsn_blood_cell', "rna_blood_log2_nTPM.csv"),
+    'Exprsn_blood_cell_rownames':  os.path.join(HPA_COMPUTE, 'Exprsn_blood_cell', 'rna_blood_rownames.csv'),
+    'Exprsn_blood_cell_colnames':  os.path.join(HPA_COMPUTE, 'Exprsn_blood_cell', 'rna_blood_colnames.csv'),
+    
+    'Exprsn_cell_line_meta':  os.path.join(HPA_COMPUTE, 'sample_info', "Exprsn_cell_line_meta.csv"),
 }
 
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 gtexPath = "../../../static/data/GTEx/"
 outputPath = "../../../static/data_computed/GTEx/"
 

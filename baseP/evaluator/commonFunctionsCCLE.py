@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/27/2022
 # Last Modified Date: 06/27/2022
-# Last Modified By  : Dian Li <dianli@wustl.edu>
+# Last Modified By  : Dian Li
 # -*- coding:utf-8 -*-
 
 import os

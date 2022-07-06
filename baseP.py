@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/20/2022
-# Last Modified Date: 06/20/2022
+# Last Modified Date: 07/05/2022
 # Last Modified By  : Dian Li
 # function to process user input variables
 
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     parser.add_argument('-t','--threads',default=4,type=int,help='Number of threads')
     parser.add_argument('-o', '--output', default='inputed sig_name',type=str, help="Output directory")
     parser.add_argument('--html_modules', nargs='+', default=[
-                        'CCLE', 'GTEx'], help = "modules user selects to view in html")
+                        'CCLE', 'GTEx', 'HPA'], help = "modules user selects to view in html")
     
 
     args = parser.parse_args()
@@ -109,14 +109,14 @@ if __name__ == "__main__":
 
         with  open(args.cell_line) as file:
             for line in file:
-                tmp  = line.strip().split()
+                tmp  = line.strip()
                 cell_line.append(tmp)
-        
-        if len(cell_line[0]) == 1: #unweighted input gene list
-            request['cell_line'] = [x[0] for x in cell_line]
+        request['cell_line'] = [x for x in cell_line]
+        # if len(cell_line[0]) == 1: #unweighted input gene list
+        #     request['cell_line'] = [x[0] for x in cell_line]
     else:
         request['cell_line'] = ""
-
+    
     logging.info('Successfully Digested Input data and Initialize evaluation...')
     geneset_logger = logging.getLogger('[Geneset]')     #call api and pass the parameters
     # api.geneset(request=request, logger_P=geneset_logger,

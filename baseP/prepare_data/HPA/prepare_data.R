@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 path = "../../../static/data/HPA/"
 outputPath = "../../../static/data_computed/HPA/"
 
@@ -57,7 +59,8 @@ write.csv(sample_info_lineage,
 )
 # ================================== #
 # load annotated sample_info table
-HPA_meta = read.csv(file = outputPath, "sample_info", "HPA_meta.csv")
+HPA_meta = read.csv(file = outputPath, "sample_info", "Exprsn_cell_line_meta")
+# change the name in accordance to the following data processing naming rule
 #############################################################################
 # ======= step 2. HPA RNA cell lines preprocess
 # pivot long 
@@ -151,7 +154,7 @@ hpa_blood_nTPM = hpa_blood_nTPM[, -1]
 hpa_blood_log2_nTPM = hpa_blood_nTPM
 hpa_blood_log2_nTPM[!is.na(hpa_blood_log2_nTPM)] = log2(1 + hpa_blood_log2_nTPM[!is.na(hpa_blood_log2_nTPM)])
 
-write.csv(x = hpa_blood_log2_nTPM, file = file.path(outputPath, "Exprsn_blood_cell", "hpa_blood_log2_nTPM.csv"), row.names = T)
+write.csv(x = hpa_blood_log2_nTPM, file = file.path(outputPath, "Exprsn_blood_cell", "rna_blood_log2_nTPM.csv"), row.names = T)
 
 
 # output rowname and colname
@@ -185,4 +188,4 @@ hpa_blood_TPM = hpa_blood_TPM[, -1]
 hpa_blood_log2_TPM = hpa_blood_TPM
 hpa_blood_log2_TPM[!is.na(hpa_blood_log2_TPM)] = log2(1 + hpa_blood_log2_TPM[!is.na(hpa_blood_log2_TPM)])
 
-write.csv(x = hpa_blood_log2_TPM, file = file.path(outputPath, "Exprsn_blood_cell", "hpa_blood_log2_TPM.csv"), row.names = T)
+write.csv(x = hpa_blood_log2_TPM, file = file.path(outputPath, "Exprsn_blood_cell", "rna_blood_log2_TPM.csv"), row.names = T)
