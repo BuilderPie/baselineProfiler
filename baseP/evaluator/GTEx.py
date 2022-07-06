@@ -8,7 +8,7 @@
 # -*- coding:utf-8 -*-
 import os
 from os import listdir, stat
-# import joblib
+import joblib
 import warnings
 warnings.simplefilter('ignore')
 # try:
@@ -18,6 +18,7 @@ warnings.simplefilter('ignore')
 
 import numpy as np
 import pandas as pd
+import subprocess
 
 # from scipy import stats, linalg
 # import lifelines
@@ -25,8 +26,6 @@ import pandas as pd
 # import statsmodels.stats.multitest as multi
 # from sklearn.preprocessing import LabelEncoder
 # import bisect
-
-import joblib
 
 # import matplotlib
 # matplotlib.use('Agg')
@@ -107,7 +106,14 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     # for x in sig_list:
     #     if x is not None:
     #         sig_dict.update(x)
-    
+    #################### 3. generate heatmap using R package pheatmap ######
+    R_RMD = os.path.join('baseP', 'evaluator', 'R_functions', 'src', 'plot_pheatmap.R')
+    for exprsn_type in exprsn_type_list:
+        r_cmd = ' '.join(['Rscript', R_RMD, 
+        '--dir ', os.path.join(output, exprsn_type, 'tables').replace(' ', '\ '), 
+        '--output ', os.path.join(output, exprsn_type, 'plots').replace(' ', '\ '),
+        '--exclude ', os.path.join(output, exprsn_type, 'tables', 'query_cell_lines.csv').replace(' ', '\ ')])
+        process = subprocess.Popen(r_cmd, shell=True).wait()
 
     
 ######## =========================================================== ########

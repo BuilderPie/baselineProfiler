@@ -8,7 +8,7 @@
 # -*- coding:utf-8 -*-
 import os
 from os import listdir, stat
-# import joblib
+import joblib
 import warnings
 warnings.simplefilter('ignore')
 # try:
@@ -18,6 +18,7 @@ warnings.simplefilter('ignore')
 
 import numpy as np
 import pandas as pd
+import subprocess
 
 # from scipy import stats, linalg
 # import lifelines
@@ -26,14 +27,14 @@ import pandas as pd
 # from sklearn.preprocessing import LabelEncoder
 # import bisect
 
-import joblib
+# import joblib
 
 # import matplotlib
 # matplotlib.use('Agg')
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
-#from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
+# from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
 from baseP.configs.data_configs import HPA_Data
 # from baseP import HPA_show_lineages
 
@@ -118,7 +119,21 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
                  name = name,
                  data_type = 'HPA') for exprsn_type in exprsn_type_list )
     
+    #################### 4. generate heatmap using R package pheatmap ######
+    R_RMD = os.path.join('baseP', 'evaluator', 'R_functions', 'src', 'plot_pheatmap.R')
+    r_cmd = ' '.join(['Rscript', R_RMD, '--file ', os.path.join(output, 'Exprsn', 'tables', 'query_cell_lines.csv').replace(' ', '\ '), '--output ', os.path.join(output, 'Exprsn', 'plots').replace(' ', '\ ')])
+    process = subprocess.Popen(r_cmd, shell=True).wait()
 
+    r_cmd = ' '.join(['Rscript', R_RMD, '--file ', os.path.join(output, 'Exprsn', 'tables', 'all_cell_lines.csv').replace(' ', '\ '), '--output ', os.path.join(output, 'Exprsn', 'plots').replace(' ', '\ ')])
+    process = subprocess.Popen(r_cmd, shell=True).wait()
+
+    r_cmd = ' '.join(['Rscript', R_RMD, '--file ', os.path.join(output, 'Exprsn', 'tables', 'all_blood_cells.csv').replace(' ', '\ '), '--output ', os.path.join(output, 'Exprsn', 'plots').replace(' ', '\ ')])
+    process = subprocess.Popen(r_cmd, shell=True).wait()
+    
+
+    # if isinstance(cell_line, list):
+    #     os.path.join(output, 'Exprsn', 'tables', 'query_cell_lines.csv')
+    # os.path.join(output, 'Exprsn', 'tables', 'all_blood_cells.csv')
     
 ######## =========================================================== ########
 ######## =========================================================== ########

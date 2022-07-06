@@ -164,7 +164,6 @@ def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, 
                     df_query_lineage.to_csv(os.path.join(output, exprsn_type, 'tables', item+'.csv'), index = False)
         #############======================================#################
         elif exprsn_type in ['Proteomics']:
-            print("abc")
             for item in CCLE_show_lineages[exprsn_type]:
                 idx_1=np.where(np.isin(metaFile['lineage'].tolist(), item))[0]
                 meta_subset = metaFile.loc[idx_1,['cell_line_CCLE', 'lineage']]

@@ -8,7 +8,7 @@
 # -*- coding:utf-8 -*-
 import os
 from os import listdir, stat
-# import joblib
+import joblib
 import warnings
 warnings.simplefilter('ignore')
 # try:
@@ -18,6 +18,7 @@ warnings.simplefilter('ignore')
 
 import numpy as np
 import pandas as pd
+import subprocess
 
 # from scipy import stats, linalg
 # import lifelines
@@ -25,8 +26,6 @@ import pandas as pd
 # import statsmodels.stats.multitest as multi
 # from sklearn.preprocessing import LabelEncoder
 # import bisect
-
-import joblib
 
 # import matplotlib
 # matplotlib.use('Agg')
@@ -59,7 +58,7 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     Returns
     ----------
     """
-    cohort_list = ['Exprsn', 'Proteomics', 'CRISPR_Broad']
+    exprsn_type_list = ['Exprsn', 'Proteomics', 'CRISPR_Broad']
 
 
     #### task list 1. Perform correlation analysis on single cohort / cancer type in Compound screeing, ####
@@ -83,10 +82,10 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     #################### 1. Fetch signature gene index (row index) from CCLE datasets ####################
     ind_list = joblib.Parallel(n_jobs=threads, backend='threading')(joblib.delayed(fetchSig_gene_index)(
                  gene_list = gene_list,
-                 exprsn_type = cohort,
+                 exprsn_type = exprsn_type,
                  logger = logger,
                  name = name,
-                 data_type = 'CCLE') for cohort in cohort_list )
+                 data_type = 'CCLE') for exprsn_type in exprsn_type_list )
                  
     ind_dict = {}
     for x in ind_list:
@@ -95,10 +94,10 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     #################### 2. Fetch signature expression values by gene index (row index) in CCLE datasets ####################
     sig_list = joblib.Parallel(n_jobs=threads, backend='threading')(joblib.delayed(fetchSig_val_by_index)(
                  gene_ind = ind_dict,
-                 exprsn_type = cohort,
+                 exprsn_type = exprsn_type,
                  logger = logger,
                  name = name,
-                 data_type = 'CCLE') for cohort in cohort_list )
+                 data_type = 'CCLE') for exprsn_type in exprsn_type_list )
 
     sig_dict = {}
     for x in sig_list:
@@ -108,14 +107,22 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     sig_list = joblib.Parallel(n_jobs=threads, backend='threading')(joblib.delayed(splitSig_by_lineage)(
                  sig_dict = sig_dict,
                  cell_line = cell_line,
-                 exprsn_type = cohort,
+                 exprsn_type = exprsn_type,
                  output = output,
                  logger = logger,
                  name = name,
-                 data_type = 'CCLE') for cohort in cohort_list )
+                 data_type = 'CCLE') for exprsn_type in exprsn_type_list )
 
 
-    
+    #################### 4. generate heatmap using R package pheatmap ######
+    R_RMD = os.path.join('baseP', 'evaluator', 'R_functions', 'src', 'plot_pheatmap.R')
+    for exprsn_type in exprsn_type_list:
+        r_cmd = ' '.join(['Rscript', R_RMD, 
+        '--dir ', os.path.join(output, exprsn_type, 'tables').replace(' ', '\ '), 
+        '--output ', os.path.join(output, exprsn_type, 'plots').replace(' ', '\ '),
+        '--exclude ', os.path.join(output, exprsn_type, 'tables', 'query_cell_lines.csv').replace(' ', '\ ')])
+        process = subprocess.Popen(r_cmd, shell=True).wait()
+
 ######## =========================================================== ########
 ######## =========================================================== ########
 ######## =========================================================== ########

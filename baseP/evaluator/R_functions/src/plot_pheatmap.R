@@ -2,8 +2,7 @@
 # --------------
 # Date:  2022-06-19 21:30:10
 # Author:Dian Li
-# Email: dianli@wustl.edu
-# Last update: 2022-06-29
+# Last update: 2022-07-06
 
 suppressMessages(library(pheatmap))
 suppressMessages(library(optparse))
@@ -24,9 +23,9 @@ option_list = list(
 opt_parser = OptionParser(option_list=option_list)
 opt = parse_args(opt_parser)
 
-call_pheatmap <- function(mat, output_name, height, width, annotation_row, ...){
+call_pheatmap <- function(mat, output_name, height, width, ...){
   png(paste0(output_name), height = height, width = width, units = "in", res = 300)
-  pheatmap(mat, na_col = "grey", annotation_row = annotation_row, ...)
+  pheatmap(mat, na_col = "grey", ...)
   dev.off()
 }
 
@@ -50,22 +49,28 @@ plot_heatmap <- function(exprsn, output_name, ...){
   
   rownames(mat) = rownames_prep
   
-  annotation_row = data.frame("Lineage" = exprsn$lineage)
-  rownames(annotation_row) = rownames(mat)
-  
   if (dim(mat)[1] <= 20){
     height = 6+0.1*dim(mat)[1]
     width = 6+0.2*dim(mat)[2]
   } else if (dim(mat)[1] < 200 & dim(mat)[1] > 20){
-    height = 6+0.01*dim(mat)[1]
+    height = 6+0.07*dim(mat)[1]
     width = 6+0.2*dim(mat)[2]
   } else {
-    height = 6+0.005*dim(mat)[1]
+    height = 6+0.001*dim(mat)[1]
     width = 6+0.2*dim(mat)[2]
   }
   
-  call_pheatmap(mat, output_name, height, width, annotation_row, angle_col = 45, ...)
-
+  # if the lineage column exists in the expression matrix
+  # then generate an annotation_row dataframe
+  if ("lineage" %in% colnames(exprsn)){
+    annotation_row = data.frame("Lineage" = exprsn$lineage)
+    rownames(annotation_row) = rownames(mat)
+    call_pheatmap(mat, output_name, height, width, annotation_row = annotation_row, angle_col = 45, ...)
+    
+  } else{
+    call_pheatmap(mat, output_name, height, width, angle_col = 45, ...)
+  }
+  
 }
 
 

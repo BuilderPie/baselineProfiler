@@ -26,8 +26,6 @@ import csv
 
 
 # from baseP import HPA_show_lineages
-
-#from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
 from baseP.configs.data_configs import HPA_Data
 
 
