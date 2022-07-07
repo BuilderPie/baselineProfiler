@@ -14,6 +14,8 @@ import pandas as pd
 import baseP.configs.dirpath
 import importlib
 
+from baseP import default_cell_line
+
 __doc__="""
 """
 if __name__ == "__main__":
@@ -115,7 +117,8 @@ if __name__ == "__main__":
         # if len(cell_line[0]) == 1: #unweighted input gene list
         #     request['cell_line'] = [x[0] for x in cell_line]
     else:
-        request['cell_line'] = ""
+        # if args.cell_line is not specified, use the default_cell_line 
+        request['cell_line'] = default_cell_line
     
     logging.info('Successfully Digested Input data and Initialize evaluation...')
     geneset_logger = logging.getLogger('[Geneset]')     #call api and pass the parameters

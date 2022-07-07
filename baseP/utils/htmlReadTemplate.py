@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/30/2022
 # Last Modified Date: 06/30/2022
-# Last Modified By  : Dian Li <dianli@wustl.edu>
+# Last Modified By  : Dian Li 
 # -*- coding:utf-8 -*-
 
 
@@ -22,8 +22,7 @@ from baseP.configs.data_configs import HTML_Data
 from baseP.utils.utilsPlotly import plotly_heatmap, plotly_heatmap_wo_dendrogram
 import datetime as dt
 
-from baseP import CCLE_show_lineages
-from baseP import GTEx_show_lineages
+from baseP import CCLE_show_lineages, GTEx_show_lineages, HPA_show_lineages
 
 import shutil
 
@@ -42,8 +41,24 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 
 	shutil.copy(os.path.join(template_path, 'style.css'), output_path)
 	shutil.copy(os.path.join(template_path, '.nojekyll'), output_path)
-	shutil.copy(os.path.join(template_path, 'index.html'), output_path)
+	# shutil.copy(os.path.join(template_path, 'index.html'), output_path)
+	publish_date = dt.datetime.strftime(dt.datetime.now(),'%b %-d, %Y')
+	
+	### ============= update index.html ============= ###
+	replace_dict = {}
+	replace_dict['{{publish_date}}'] = publish_date
 
+	template_file = os.path.join(template_path, 'index.html')
+	if os.path.isfile(template_file):
+		output_file = os.path.join(output_path, 'index.html')
+		with open(template_file, 'r') as template, open(output_file, 'w') as output:
+			# with open(template_file, 'r') as template:
+			for line in template:
+				for key, val in replace_dict.items():
+					line = line.replace(key, val)
+				output.write(line)
+
+	### ============= update CCLE_*.html ============= ###
 	if "CCLE" in modules_selected:
 		exprsn_type_list = ['Exprsn', 'Proteomics', 'CRISPR_Broad']
 		# if the corresponding template exists
@@ -53,6 +68,7 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 				# create a replace dictionary that store the plotly html code
 				# to be replaced into the template
 				replace_dict = {}
+				replace_dict['{{publish_date}}'] = publish_date
 				counter = 0
 				for lineage in CCLE_show_lineages[exprsn_type]:
 					lineage_csv = os.path.join(analysis_path, "CCLE_evaluator", exprsn_type, "tables", lineage+".csv")
@@ -86,16 +102,63 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 						for key, val in replace_dict.items():
 							line = line.replace(key, val)
 						output.write(line)
+	### ============= update GTEx_*.html ============= ###
 	if "GTEx" in modules_selected:	
 		exprsn_type_list = ['Exprsn']
 		# if the corresponding template exists
 		for exprsn_type in exprsn_type_list:
 			# if template file exists, copy the template file to output folder
+			replace_dict = {}
+			replace_dict['{{publish_date}}'] = publish_date
+
 			template_file = os.path.join(template_path, "GTEx_"+exprsn_type+'.html')
 			if os.path.isfile(template_file):
 				output_file = os.path.join(output_path, "GTEx_"+exprsn_type+'.html')
-				shutil.copyfile(template_file, output_file)
-				
+				with open(template_file, 'r') as template, open(output_file, 'w') as output:
+				# with open(template_file, 'r') as template:
+					for line in template:
+						for key, val in replace_dict.items():
+							line = line.replace(key, val)
+						output.write(line)
+				# shutil.copyfile(template_file, output_file)
+	### ============= update HPA_*.html ============= ###
+	if "HPA" in modules_selected:	
+		exprsn_type_list = ['Exprsn']
+		# if the corresponding template exists
+		for exprsn_type in exprsn_type_list:
+			# if template file exists, copy the template file to output folder
+			template_file = os.path.join(template_path, "More_"+exprsn_type+'.html')
+			if os.path.isfile(template_file):
+				replace_dict = {}
+				replace_dict['{{publish_date}}'] = publish_date
+				counter = 0
+				for lineage in HPA_show_lineages[exprsn_type]:
+					lineage_csv = os.path.join(analysis_path, "HPA_evaluator", exprsn_type, "tables", lineage+".csv")
+					if os.path.isfile(lineage_csv):
+						df = pd.read_csv(lineage_csv, index_col = 0)
+						df = df.iloc[:,1:]
+
+						df_index = df.index.tolist()
+						nan_index = pd.isnull(df_index)
+						if sum(nan_index) > 0:
+							nan_index = [i for i, x in enumerate(nan_index) if x]
+							for x in nan_index:
+								df_index[x] = "NAN_"+str(x)
+							df.index = df_index
+						include_plotlyjs = True if counter == 0 else 'cdn'
+						if exprsn_type == "Exprsn":
+							fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(nTPM)")
+							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
+						counter = 1
+
+				output_file = os.path.join(output_path, "More_"+exprsn_type+'.html')
+				# shutil.copyfile(template_file, output_file)	
+				with open(template_file, 'r') as template, open(output_file, 'w') as output:
+				# with open(template_file, 'r') as template:
+					for line in template:
+						for key, val in replace_dict.items():
+							line = line.replace(key, val)
+						output.write(line)		
 
 
 

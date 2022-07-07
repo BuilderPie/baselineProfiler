@@ -47,7 +47,10 @@ def plotly_heatmap(df, colorbar_title = "log2(TPM)"):
             colorscale = 'RdYlBu',
             reversescale=True,
             opacity = 0.9,
-            colorbar = dict(len = 0.4, lenmode = 'fraction', title = colorbar_title)
+            colorbar = dict(len = 0.4, lenmode = 'fraction', title = colorbar_title),
+            hovertemplate= '<b>Gene: %{x}<br><b>Cell: %{y}<br>Value: %{z}<extra></extra>',
+            xgap = 0.5, ygap = 0.5,
+            colorbar_orientation='h'
         )
     ]
 
@@ -60,10 +63,12 @@ def plotly_heatmap(df, colorbar_title = "log2(TPM)"):
         fig.add_trace(data)
 
     # calculate fig height
-    if heat_data.shape[0] <= 30:
-        fig_height = 400+heat_data.shape[0]*7
+    if data_array.shape[0] <= 10:
+        fig_height = 250+data_array.shape[0]*7
+    elif data_array.shape[0] > 10 and data_array.shape[0] <= 100:
+        fig_height = 300+data_array.shape[0]*12
     else:
-        fig_height = 200+heat_data.shape[0]*7
+        fig_height = 150+data_array.shape[0]*13
 
     # Edit Layout
     fig.update_layout({
@@ -73,17 +78,18 @@ def plotly_heatmap(df, colorbar_title = "log2(TPM)"):
                         'showlegend':False, 'hovermode': 'closest',
                         'plot_bgcolor': 'rgba(0,0,0,0)',
                         'paper_bgcolor': 'rgba(0,0,0,0)',
-                        'margin_t': 20
+                        'margin': dict(l=20, r=20, t=5, b=0),
+                        
                         })
     # Edit xaxis
-    fig.update_layout(xaxis={'domain': [.15, 1],
+    fig.update_layout(xaxis={'domain': [.08, 1],
                                     'mirror': False,
                                     'showgrid': False,
                                     'showline': False,
                                     'zeroline': False,
                                     'ticks':""})
     # Edit xaxis2
-    fig.update_layout(xaxis2={'domain': [0, .145],
+    fig.update_layout(xaxis2={'domain': [0, .075],
                                     'mirror': False,
                                     'showgrid': False,
                                     'showline': False,
@@ -95,26 +101,28 @@ def plotly_heatmap(df, colorbar_title = "log2(TPM)"):
     fig['layout']['yaxis']['tickvals'] = dendro_side['layout']['yaxis']['tickvals']
 
     # Edit yaxis
-    fig.update_layout(yaxis={'domain': [0, .85],
+    fig.update_layout(yaxis={'domain': [0, .95],
                                     'mirror': False,
                                     'showgrid': False,
                                     'showline': False,
                                     'zeroline': False,
-                                    'showticklabels': False,
-                                    'ticks': ""
+                                    'showticklabels': True,
+                                    'ticks': "",
+                                    'side': 'right'
                             })
     # Edit yaxis2
-    fig.update_layout(yaxis2={'domain':[.85, .975],
+    fig.update_layout(yaxis2={'domain':[.95, .99],
                                     'mirror': False,
                                     'showgrid': False,
                                     'showline': False,
                                     'zeroline': False,
                                     'showticklabels': False,
-                                    'ticks':""})
+                                    'ticks':""
+                                    })
 
     # reverse y-axis
     fig['layout']['yaxis']['autorange'] = "reversed"
-
+    
     # Plot!
     # fig.show()
 
@@ -131,13 +139,16 @@ def plotly_heatmap_wo_dendrogram(df, colorbar_title = "log2(TPM)"):
     labels_x = df.columns.to_list()
 
     fig = go.Figure(data=go.Heatmap(
-        z=data_array,
-        x=labels_x,
-        y=labels_y,
-        colorscale = 'RdYlBu',
-        reversescale=True,
-        opacity = 0.9,
-        colorbar = dict(len = 0.4, lenmode = 'fraction', title = colorbar_title)
+            z=data_array,
+            x=labels_x,
+            y=labels_y,
+            colorscale = 'RdYlBu',
+            reversescale=True,
+            opacity = 0.9,
+            colorbar = dict(len = 0.4, lenmode = 'fraction', title = colorbar_title),
+            hovertemplate= '<b>Gene: %{x}<br><b>Cell: %{y}<br>z: %{z}<extra></extra>',
+            xgap = 0.5, ygap = 0.5,
+            colorbar_orientation='h'
         )
     )
 
@@ -150,10 +161,12 @@ def plotly_heatmap_wo_dendrogram(df, colorbar_title = "log2(TPM)"):
     #     fig.add_trace(data)
 
     # calculate fig height
-    if data_array.shape[0] <= 30:
-        fig_height = 400+data_array.shape[0]*7
+    if data_array.shape[0] <= 10:
+        fig_height = 250+data_array.shape[0]*7
+    elif data_array.shape[0] > 10 and data_array.shape[0] <= 100:
+        fig_height = 300+data_array.shape[0]*13
     else:
-        fig_height = 200+data_array.shape[0]*7
+        fig_height = 150+data_array.shape[0]*13
 
     # Edit Layout
     fig.update_layout({
@@ -163,7 +176,7 @@ def plotly_heatmap_wo_dendrogram(df, colorbar_title = "log2(TPM)"):
                         'showlegend':False, 'hovermode': 'closest',
                         'plot_bgcolor': 'rgba(0,0,0,0)',
                         'paper_bgcolor': 'rgba(0,0,0,0)',
-                        'margin_t': 20
+                        'margin': dict(l=20, r=20, t=5, b=0),
                         })
     # # Edit xaxis
     # fig.update_layout(xaxis={'domain': [.15, 1],

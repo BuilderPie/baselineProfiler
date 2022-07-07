@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # License           : MIT
-# Author            : Dian Li <dianli@wustl.edu> Jingxin Fu
+# Author            : Dian Li Jingxin Fu
 # Date              : 06/30/2022
 # Last Modified Date: 06/30/2022
-# Last Modified By  : Dian Li <dianli@wustl.edu> 
+# Last Modified By  : Dian Li  
 # -*- coding:utf-8 -*-
 import os
 from os import listdir
@@ -46,9 +46,36 @@ def analyze(df,request,logger,name,threads, modules_selected, weights):
 # 	#====================#
 # 	logger.info('Finish: Convert tables to JSON format')
 # 	#====================#
-	# copy proteomics figures to htmp figs folder
+	# copy GTEx figures to heatmp figs folder
 	src = os.path.join(request['output'], 'GTEx_evaluator', 'Exprsn', 'plots')
 	dst = os.path.join(request['output'], 'html', 'figs', 'GTEx_evaluator','Exprsn')
+	shutil.rmtree(dst)
+	shutil.copytree(src, dst) 
+	#====================#
+	# copy HPA figures to heatmp figs folder
+	src = os.path.join(request['output'], 'HPA_evaluator', 'Exprsn', 'plots')
+	dst = os.path.join(request['output'], 'html', 'figs', 'HPA_evaluator','Exprsn')
+	shutil.rmtree(dst)
+	shutil.copytree(src, dst) 
+
+	#====================#
+	# copy CCLE Exprsn figures to heatmp figs folder
+	src = os.path.join(request['output'], 'CCLE_evaluator', 'Exprsn', 'plots')
+	dst = os.path.join(request['output'], 'html', 'figs', 'CCLE_evaluator','Exprsn')
+	shutil.rmtree(dst)
+	shutil.copytree(src, dst) 
+
+	#====================#
+	# copy CCLE Proteomics figures to heatmp figs folder
+	src = os.path.join(request['output'], 'CCLE_evaluator', 'Proteomics', 'plots')
+	dst = os.path.join(request['output'], 'html', 'figs', 'CCLE_evaluator','Proteomics')
+	shutil.rmtree(dst)
+	shutil.copytree(src, dst) 
+
+	#====================#
+	# copy CCLE CRISPR_Broad figures to heatmp figs folder
+	src = os.path.join(request['output'], 'CCLE_evaluator', 'CRISPR_Broad', 'plots')
+	dst = os.path.join(request['output'], 'html', 'figs', 'CCLE_evaluator','CRISPR_Broad')
 	shutil.rmtree(dst)
 	shutil.copytree(src, dst) 
 

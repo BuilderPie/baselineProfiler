@@ -27,12 +27,14 @@ CCLE_show_lineages = {
         "breast",
         "central_nervous_system",
         "colorectal",
+        "fibroblast",
         "gastric",
         "liver",
         "lung",
         "lymphocyte",
         "peripheral_nervous_system",
-        "skin"
+        "skin",
+        "query_cell_lines"
     ],
     "CRISPR_Broad": [
         "blood",
@@ -41,23 +43,26 @@ CCLE_show_lineages = {
         "central_nervous_system",
         "colorectal",
         "gastric",
+        "kidney",
         "liver",
         "lung",
         "lymphocyte",
         "peripheral_nervous_system",
-        "skin"
+        "skin",
+        "query_cell_lines"
     ],
     "Proteomics": [
-       "Bone",
-       "Breast",
-       "Central Nervous System",
-       "Haematopoietic and Lymphoid Tissue",
-       "Large Intestine",
-       "Liver",
-       "Lung",
-       "Lymphoma",
-       "Skin",
-       "Stomach"
+        "Bone",
+        "Breast",
+        "Central Nervous System",
+        "Haematopoietic and Lymphoid Tissue",
+        "Large Intestine",
+        "Liver",
+        "Lung",
+        "Lymphoma",
+        "Skin",
+        "Stomach",
+        "query_cell_lines"
     ]
 }
 
@@ -80,11 +85,30 @@ GTEx_show_lineages = {
 }
 
 
-
-
+#################### default cell line in case user doesn't provide a list ####################
+default_cell_line = [
+    "A549",
+    "AF22",
+    "HaCaT",
+    "HEK 293",
+    "HeLa",
+    "Jurkat",
+    "K-562",
+    "Raji",
+    "SH-SY5Y",
+    "SNU738",
+    "THP-1",
+    "U937"
+]
     
     
-
+HPA_show_lineages = {
+    "Exprsn": [
+        "all_blood_cells",
+        "all_cell_lines",
+        "query_cell_lines"
+    ]
+}
     
 
 

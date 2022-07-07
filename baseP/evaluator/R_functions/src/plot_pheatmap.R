@@ -49,15 +49,18 @@ plot_heatmap <- function(exprsn, output_name, ...){
   
   rownames(mat) = rownames_prep
   
-  if (dim(mat)[1] <= 20){
-    height = 6+0.1*dim(mat)[1]
+  if (dim(mat)[1] <= 40){
+    height = 4+0.1*dim(mat)[1]
+    width = 5+0.2*dim(mat)[2]
+  } else if (dim(mat)[1] <= 100 & dim(mat)[1] > 40){
+    height = 6+0.08*dim(mat)[1]
     width = 6+0.2*dim(mat)[2]
-  } else if (dim(mat)[1] < 200 & dim(mat)[1] > 20){
-    height = 6+0.07*dim(mat)[1]
-    width = 6+0.2*dim(mat)[2]
-  } else {
+  } else if (dim(mat)[1] <= 200 & dim(mat)[1] > 100){
     height = 6+0.001*dim(mat)[1]
-    width = 6+0.2*dim(mat)[2]
+    width = 4+0.2*dim(mat)[2]
+  } else {
+    height = 6+0.0007*dim(mat)[1]
+    width = 4+0.2*dim(mat)[2]
   }
   
   # if the lineage column exists in the expression matrix
