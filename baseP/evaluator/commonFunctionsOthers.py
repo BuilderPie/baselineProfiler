@@ -80,7 +80,7 @@ def fetchSig_val_by_index(gene_ind, exprsn_type, output, logger, name, data_type
                 df_out.insert(0, "cell_line",  tissue_name, True)
                 df_out.insert(1, "lineage",  'Neuro2a', True)
 
-                df_out.to_csv(os.path.join(output, 'exprsn', 'tables', exprsn_type+'_query_cell_lines.csv'), index = False)
+                df_out.to_csv(os.path.join(output, 'Exprsn', 'tables', exprsn_type+'_query_cell_lines.csv'), index = False)
                 # return {cohort: rows,
                 #         cohort+'_gene_name': gene_name}
 
