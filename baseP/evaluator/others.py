@@ -109,9 +109,9 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     R_RMD = os.path.join('baseP', 'evaluator', 'R_functions', 'src', 'plot_pheatmap.R')
     for exprsn_type in exprsn_type_list:
         r_cmd = ' '.join(['Rscript', R_RMD, 
-        '--dir ', os.path.join(output, 'exprsn', 'tables').replace(' ', '\ '), 
-        '--output ', os.path.join(output, 'exprsn', 'plots').replace(' ', '\ '),
-        '--exclude ', os.path.join(output, 'exprsn', 'tables', exprsn_type_list[0]+'_query_cell_lines.csv').replace(' ', '\ ')])
+        '--dir ', os.path.join(output, 'Exprsn', 'tables').replace(' ', '\ '), 
+        '--output ', os.path.join(output, 'Exprsn', 'plots').replace(' ', '\ '),
+        '--exclude ', os.path.join(output, 'Exprsn', 'tables', exprsn_type_list[0]+'_query_cell_lines.csv').replace(' ', '\ ')])
         process = subprocess.Popen(r_cmd, shell=True).wait()
 
     
