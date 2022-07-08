@@ -40,7 +40,7 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 		shutil.copytree(src, dst) 
 
 	shutil.copy(os.path.join(template_path, 'style.css'), output_path)
-	shutil.copy(os.path.join(template_path, '.nojekyll'), output_path)
+	# shutil.copy(os.path.join(template_path, '.nojekyll'), output_path)
 	# shutil.copy(os.path.join(template_path, 'index.html'), output_path)
 	publish_date = dt.datetime.strftime(dt.datetime.now(),'%b %-d, %Y')
 	
