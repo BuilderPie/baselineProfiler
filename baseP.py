@@ -33,6 +33,8 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', default='inputed sig_name',type=str, help="Output directory")
     parser.add_argument('--html_modules', nargs='+', default=[
                         'CCLE', 'GTEx', 'HPA'], help = "modules user selects to view in html")
+    parser.add_argument('-p', '--precompute', default=False,
+                         help='pre-compute data, input could be (only) ONE of the following modules: symbols, Neuro2a')
     
 
     args = parser.parse_args()
@@ -52,6 +54,23 @@ if __name__ == "__main__":
     
     from baseP import api 
     
+    # precompute data
+    from baseP.prepare_data import prepare_data
+    
+    #infer secondary data
+    if args.precompute:
+        if "symbols".casefold() in args.precompute.casefold():
+            # config_logger.info('run pyhton to preprocess CCLE data to generate biomarker, infiltration and so on')
+            print('Annotation symbols precompute started')
+            prepare_data.symbols_precompute()
+            # importlib.reload(baseP.configs.data_configs)
+            # from baseP.configs.data_configs import CCLE_Data
+            print('Annotation symbols precompute finished')
+        if "Neuro2a".casefold() in args.precompute.casefold():
+            print('Annotation symbols precompute started')
+            prepare_data.Neuro2a_precompute()  
+            print('Annotation symbols precompute finished')
+        
     # set up logging to file
     
     logging.basicConfig(level=logging.DEBUG,

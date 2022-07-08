@@ -17,7 +17,8 @@ RcmdPath=os.path.join('Invoke_Rscripts.R')
 mm10_ANNO_GENE = os.path.join(DATA_DIR, 'Annotation','mm_ensembl.txt')
 hg38_ANNO_GENE = os.path.join(DATA_DIR, 'Annotation','hg_ensembl.txt')
 
-
+HOM_MouseHumanSequence = os.path.join(DATA_DIR, 'Annotation', 'symbols', 'HOM_MouseHumanSequence.rpt')
+HOM_MouseHumanSequence_processed = os.path.join(DATA_COMPUTE, 'Annotation', 'HOM_MouseHumanSequence_processed.csv')
 #################### CCLE SETTING####################
 CCLE_DIR = os.path.join(DATA_DIR, 'CCLE')
 CCLE_COMPUTE = os.path.join(DATA_COMPUTE, 'CCLE')
@@ -51,7 +52,7 @@ GTEx_Data = {
     'Exprsn_rownames':  os.path.join(GTEx_COMPUTE, 'sample_info', 'gene_name.csv'),
 }
 
-#################### GTEx SETTING####################
+#################### HPA SETTING####################
 HPA_COMPUTE = os.path.join(DATA_COMPUTE, 'HPA')
 HPA_Data = {
     'Exprsn_cell_line':  os.path.join(HPA_COMPUTE, 'Exprsn_cell_line', "rna_celline_log2_nTPM.csv"),
@@ -64,6 +65,13 @@ HPA_Data = {
     
     'Exprsn_cell_line_meta':  os.path.join(HPA_COMPUTE, 'sample_info', "Exprsn_cell_line_meta.csv"),
 }
+
+#################### others SETTING####################
+others_COMPUTE = os.path.join(DATA_COMPUTE, 'HPA')
+others_Data = {
+    'Exprsn_Neuro2a': os.path.join(others_COMPUTE, '')
+}
+
 
 
 #################### post HTML SETTING####################
