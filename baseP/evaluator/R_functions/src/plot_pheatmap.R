@@ -17,7 +17,9 @@ option_list = list(
   make_option(c("-o", "--output"), type="character", default=NULL, 
               help="output directory", metavar="character"),
   make_option(c("--exclude"), type="character", default=NULL, 
-              help="file that to be excluded from being combined", metavar="character")
+              help="file that to be excluded from being combined", metavar="character"),
+  make_option(c("--show_row_labels"), type="logical", default=FALSE, 
+              help="logic variable indicating whether to show row labels", metavar="TRUE or FALSE")
   )
 
 opt_parser = OptionParser(option_list=option_list)
@@ -96,7 +98,12 @@ if (!is.null(opt$d)){
       exprsn = read.csv(file.path(opt$d, eachFile), check.names = F)
       output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', eachFile),'.png'))
       metric = ifelse(dim(exprsn)>3, TRUE, FALSE)
-      plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = metric, cluster_cols = metric)
+      if (dim(exprsn)[1]>100){
+        show_metric = FALSE
+      } else {
+        show_metric = opt$show_row_labels
+      }
+      plot_heatmap(exprsn, output_name, show_rownames = show_metric, cluster_rows = metric, cluster_cols = metric)
     } else {
       exprsn = read.csv(file.path(opt$d, eachFile), check.names = F)
       output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', eachFile),'.png'))

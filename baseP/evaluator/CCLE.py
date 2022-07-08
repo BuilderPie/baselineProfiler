@@ -120,7 +120,9 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
         r_cmd = ' '.join(['Rscript', R_RMD, 
         '--dir ', os.path.join(output, exprsn_type, 'tables').replace(' ', '\ '), 
         '--output ', os.path.join(output, exprsn_type, 'plots').replace(' ', '\ '),
-        '--exclude ', os.path.join(output, exprsn_type, 'tables', 'query_cell_lines.csv').replace(' ', '\ ')])
+        '--exclude ', os.path.join(output, exprsn_type, 'tables', 'query_cell_lines.csv').replace(' ', '\ '),
+        '--show_row_labels ', 'TRUE'
+        ])
         process = subprocess.Popen(r_cmd, shell=True).wait()
 
 ######## =========================================================== ########
