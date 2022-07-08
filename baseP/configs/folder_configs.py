@@ -24,6 +24,11 @@ def formOutput(output):
        os.path.join(output, 'HPA_evaluator', 'Exprsn'),
        os.path.join(output, 'HPA_evaluator', 'Exprsn', 'tables'),
        os.path.join(output, 'HPA_evaluator', 'Exprsn', 'plots'),
+
+       os.path.join(output, 'others_evaluator'),
+       os.path.join(output, 'others_evaluator', 'Exprsn'),
+       os.path.join(output, 'others_evaluator', 'Exprsn', 'tables'),
+       os.path.join(output, 'others_evaluator', 'Exprsn', 'plots'),
        
        
        ### html report
@@ -39,6 +44,9 @@ def formOutput(output):
 
         os.path.join(output, 'html', 'figs', 'HPA_evaluator'),
         os.path.join(output, 'html', 'figs', 'HPA_evaluator', 'Exprsn'),
+
+        os.path.join(output, 'html', 'figs', 'others_evaluator'),
+        os.path.join(output, 'html', 'figs', 'others_evaluator', 'Exprsn'),
 
         os.path.join(output, 'meta'),
         os.path.join(output, 'meta', 'tables'),

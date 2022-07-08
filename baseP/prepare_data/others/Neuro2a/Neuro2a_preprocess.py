@@ -28,13 +28,13 @@ def analyze():
 
     df_merge = df_merge.iloc[:, ~df_merge.columns.isin(['gene_name'])]
 
-    os.makedirs(os.path.join(DATA_COMPUTE, 'others', 'Neuro2a', 'Exprsn'), exist_ok=True)
-    output_file = os.path.join(DATA_COMPUTE, 'others', 'Neuro2a', 'Exprsn', 'raw_log2_TPM_name_matched.csv')
+    os.makedirs(os.path.join(DATA_COMPUTE, 'others', 'Exprsn_Neuro2a'), exist_ok=True)
+    output_file = os.path.join(DATA_COMPUTE, 'others', 'Exprsn_Neuro2a', 'raw_log2_TPM_name_matched.csv')
     df_merge.to_csv(output_file, index = False)
 
-    output_file = os.path.join(DATA_COMPUTE, 'others', 'Neuro2a', 'Exprsn', 'raw_log2_TPM_gene_names.csv')
+    output_file = os.path.join(DATA_COMPUTE, 'others', 'Exprsn_Neuro2a', 'raw_log2_TPM_gene_names.csv')
     df_merge.loc[:, ['mouse_gene_symbol', 'human_gene_symbol']].to_csv(output_file, index = False)
 
-    output_file = os.path.join(DATA_COMPUTE, 'others', 'Neuro2a', 'Exprsn', 'raw_log2_TPM_column_names.csv')
+    output_file = os.path.join(DATA_COMPUTE, 'others', 'Exprsn_Neuro2a', 'raw_log2_TPM_column_names.csv')
     pd.DataFrame(data=df_merge.columns.tolist(), columns=['colnames']).to_csv(output_file, index = False)
     

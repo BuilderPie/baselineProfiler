@@ -67,9 +67,10 @@ HPA_Data = {
 }
 
 #################### others SETTING####################
-others_COMPUTE = os.path.join(DATA_COMPUTE, 'HPA')
+others_COMPUTE = os.path.join(DATA_COMPUTE, 'others')
 others_Data = {
-    'Exprsn_Neuro2a': os.path.join(others_COMPUTE, '')
+    'Exprsn_Neuro2a': os.path.join(others_COMPUTE, 'Exprsn_Neuro2a', 'raw_log2_TPM_name_matched.csv'),
+    'Exprsn_Neuro2a_rownames': os.path.join(others_COMPUTE, 'Exprsn_Neuro2a', 'raw_log2_TPM_gene_names.csv')
 }
 
 

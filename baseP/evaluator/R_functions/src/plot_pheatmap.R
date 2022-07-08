@@ -106,11 +106,15 @@ if (!is.null(opt$d)){
   }
   # plot combined expression file, without the specified "--exclude" file
   files = files[which(files != basename(opt$exclude))]
-  exprsn = lapply(files, FUN = function(x){
-    read.csv(file.path(opt$d, x), check.names = F)
-  })
-  exprsn = do.call(rbind, exprsn)
-  output_name = file.path(opt$o, paste0('heatmap_combined_lineage.png'))
-  plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = F, cluster_cols = T)
+  
+  # if there is at least 1 file in the folder besides to exclude file
+  if (length(files) > 0){
+    exprsn = lapply(files, FUN = function(x){
+      read.csv(file.path(opt$d, x), check.names = F)
+    })
+    exprsn = do.call(rbind, exprsn)
+    output_name = file.path(opt$o, paste0('heatmap_combined_lineage.png'))
+    plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = F, cluster_cols = T)
+  }
   
 }

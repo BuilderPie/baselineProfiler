@@ -22,7 +22,7 @@ from baseP.configs.data_configs import HTML_Data
 from baseP.utils.utilsPlotly import plotly_heatmap, plotly_heatmap_wo_dendrogram
 import datetime as dt
 
-from baseP import CCLE_show_lineages, GTEx_show_lineages, HPA_show_lineages
+from baseP import CCLE_show_lineages, GTEx_show_lineages, HPA_show_lineages, others_show_lineages
 
 import shutil
 
@@ -121,7 +121,7 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 							line = line.replace(key, val)
 						output.write(line)
 				# shutil.copyfile(template_file, output_file)
-	### ============= update HPA_*.html ============= ###
+	### ============= update More_Exprsn.html ============= ###
 	if "HPA" in modules_selected:	
 		exprsn_type_list = ['Exprsn']
 		# if the corresponding template exists
@@ -160,8 +160,50 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 							line = line.replace(key, val)
 						output.write(line)		
 
+	if "others" in modules_selected:	
+		exprsn_type_list = ['Exprsn_Neuro2a']
+		# if the corresponding template exists
+		for exprsn_type in exprsn_type_list:
+			# if template file exists, copy the template file to output folder
+			template_file = os.path.join(output_path, "More_Exprsn.html") # because HPA module already output
+			# this template, we have to use the edited one as the template here
+			if os.path.isfile(template_file):
+				# rename the original template file because need to create an updated file with the same name
+				template_file_new = os.path.join(output_path, "More_Exprsn.html.tmp")
+				os.rename(template_file, template_file_new)
 
+				replace_dict = {}
+				replace_dict['{{publish_date}}'] = publish_date
+				# counter = 0
+				
+				for lineage in others_show_lineages[exprsn_type]:
+					lineage_csv = os.path.join(analysis_path, "others_evaluator", 'Exprsn', "tables", exprsn_type+'_'+lineage+".csv")
+					if os.path.isfile(lineage_csv):
+						df = pd.read_csv(lineage_csv, index_col = 0)
+						df = df.iloc[:,1:]
 
+						df_index = df.index.tolist()
+						nan_index = pd.isnull(df_index)
+						if sum(nan_index) > 0:
+							nan_index = [i for i, x in enumerate(nan_index) if x]
+							for x in nan_index:
+								df_index[x] = "NAN_"+str(x)
+							df.index = df_index
+						include_plotlyjs = False # because it is already included when adding HPA figures
+						if exprsn_type == "Exprsn_Neuro2a":
+							fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(nTPM)")
+							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
+						# counter = 1
+
+				output_file = os.path.join(output_path, "More_"+'Exprsn'+'.html')
+				# shutil.copyfile(template_file, output_file)	
+				with open(template_file_new, 'r') as template, open(output_file, 'w') as output:
+				# with open(template_file, 'r') as template:
+					for line in template:
+						for key, val in replace_dict.items():
+							line = line.replace(key, val)
+						output.write(line)	
+				os.remove(template_file_new)
 
 
 

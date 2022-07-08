@@ -17,6 +17,7 @@ import pandas as pd
 import baseP.evaluator.CCLE as CCLE 
 import baseP.evaluator.GTEx as GTEx
 import baseP.evaluator.HPA as HPA
+import baseP.evaluator.others as others
 # from baseP import R_RMD
 from baseP.utils import postProcess
 
@@ -95,6 +96,12 @@ def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, we
         logger.info('Start evaluating association of input gene list in HPA data.')
         HPA.analyze(data, cell_line, output=os.path.join(request['output'],'HPA_evaluator'), logger=logger, name=name, threads= threads)
         logger_P.info('Successfully finish HPA evaluator.')
+    
+    if 'others' in evaluators:
+        logger = logger_P.getChild('[others]')
+        logger.info('Start evaluating association of input gene list in others data.')
+        others.analyze(data, cell_line, output=os.path.join(request['output'],'others_evaluator'), logger=logger, name=name, threads= threads)
+        logger_P.info('Successfully finish others evaluator.')
 
 
     # if 'Crispr' in evaluators:

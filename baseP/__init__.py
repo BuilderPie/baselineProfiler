@@ -109,6 +109,12 @@ HPA_show_lineages = {
         "query_cell_lines"
     ]
 }
+
+others_show_lineages = {
+   "Exprsn_Neuro2a": [
+        "query_cell_lines"
+    ] 
+}
     
 
 
