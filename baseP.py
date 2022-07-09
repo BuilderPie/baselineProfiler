@@ -34,7 +34,7 @@ if __name__ == "__main__":
     parser.add_argument('--html_modules', nargs='+', default=[
                         'CCLE', 'GTEx', 'HPA'], help = "modules user selects to view in html")
     parser.add_argument('-p', '--precompute', default=False,
-                         help='pre-compute data, input could be (only) ONE of the following modules: symbols, Neuro2a')
+                         help='pre-compute data, input could be (only) ONE of the following modules: symbols, Neuro2a, CCLE, GTEx, HPA')
     
 
     args = parser.parse_args()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     
     # precompute data
     from baseP.prepare_data import prepare_data
-    
+    print(args.precompute)
     #infer secondary data
     if args.precompute:
         if "symbols".casefold() in args.precompute.casefold():
@@ -67,9 +67,21 @@ if __name__ == "__main__":
             # from baseP.configs.data_configs import CCLE_Data
             print('Annotation symbols precompute finished')
         if "Neuro2a".casefold() in args.precompute.casefold():
-            print('Annotation symbols precompute started')
+            print('Neuro2a precompute started')
             prepare_data.Neuro2a_precompute()  
-            print('Annotation symbols precompute finished')
+            print('Neuro2a precompute finished')
+        if "CCLE".casefold() in args.precompute.casefold():
+            print('CCLE precompute started')
+            prepare_data.CCLE_precompute()  
+            print('CCLE precompute finished')
+        if "GTEx".casefold() in args.precompute.casefold():
+            print('GTEx precompute started')
+            prepare_data.GTEx_precompute()  
+            print('GTEx precompute finished')
+        if "HPA".casefold() in args.precompute.casefold():
+            print('HPA precompute started')
+            prepare_data.HPA_precompute()  
+            print('HPA precompute finished')
         
     # set up logging to file
     
