@@ -33,9 +33,13 @@ circular_barplot_base = function(data){
   # Get the name and the y position of each label
   label_data <- data
   number_of_bar <- nrow(label_data)
-  angle <- 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
-  label_data$hjust <- ifelse( angle < -90, 1, 0)
-  label_data$angle <- ifelse(angle < -90, angle+180, angle)
+  angle <- 30 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+  # label_data$hjust <- ifelse( angle < -90, 1, 0)
+  # label_data$angle <- ifelse(angle < -90, angle+180, angle)
+  label_data$hjust <- ifelse( angle < -90 & angle >= -275, 1, 0)
+  label_data$angle <- ifelse(angle < -90 & angle >= -275, angle+180, angle)
+  # addition adjust for -315 to -360 region, because the origin was rotated 45
+  
   
   # prepare a data frame for base lines
   base_data <- data %>% 
@@ -86,7 +90,7 @@ circular_barplot_base = function(data){
       plot.margin = unit(rep(-1,4), "cm") 
     ) +
     theme(plot.background = element_rect(fill = 'white', colour = 'white')) +
-    coord_polar() + 
+    coord_polar(start = 45) + 
     geom_text(data=label_data, aes(x=id, y=value+10, label=individual, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=1.8, angle= label_data$angle, inherit.aes = FALSE ) +
     
     # Add base line information
