@@ -86,6 +86,13 @@ def analyze(df,request,logger,name,threads, modules_selected, weights):
 	shutil.rmtree(dst)
 	shutil.copytree(src, dst)
 
+	# ==================== #
+	# copy index page stats figures
+	src = os.path.join(HTML_DIR, 'figs', 'index_file')
+	dst = os.path.join(request['output'], 'html', 'figs', 'index_file')
+	shutil.rmtree(dst)
+	shutil.copytree(src, dst)
+
 # 	# try: 
 	logger.info('Start: Generate HTML report')
 	html_build(analysis_path=request['output'],template_path=HTML_DIR,output_path=os.path.join(request['output'],'html'),name=name, modules_selected=modules_selected)

@@ -13,6 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import subprocess
+import shutil
 
 from baseP.configs.data_configs import DATA_DIR, DATA_COMPUTE, HOM_MouseHumanSequence
 from baseP.prepare_data.prepare_utils import txt_2_json, txt_2_datatables
@@ -75,6 +76,11 @@ def stat_CCLE_Exprsn():
     ])
     process = subprocess.Popen(r_cmd, shell=True).wait()
 
+    dst = os.path.join(DATA_DIR, 'Annotation', 'html_template', 'figs', 'index_file')
+    os.makedirs(dst, exist_ok=True)
+    shutil.copyfile(src=os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'figs', 'stats_CCLE_Expression_sample_info.png').replace(' ', '\ '),
+    dst=os.path.join(dst, 'stats_CCLE_Expression_sample_info.png'))
+
 def stat_CCLE_CRISPR_Broad():
     ######################### Part 1. preprocess CCLE expression file ###############################
     CCLE_expression_file = os.path.join(DATA_DIR, 'CCLE', 'CRISPR_gene_effect.csv')
@@ -129,6 +135,11 @@ def stat_CCLE_CRISPR_Broad():
     ])
     process = subprocess.Popen(r_cmd, shell=True).wait()
 
+    dst = os.path.join(DATA_DIR, 'Annotation', 'html_template', 'figs', 'index_file')
+    os.makedirs(dst, exist_ok=True)
+    shutil.copyfile(src=os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'figs', 'stats_CCLE_CRISPR_Broad_sample_info.png').replace(' ', '\ '),
+    dst=os.path.join(dst, 'stats_CCLE_CRISPR_Broad_sample_info.png'))
+
 def stat_CCLE_Proteomics():
     ######################### Part 1. preprocess CCLE expression file ###############################
     CCLE_sample_info_file = os.path.join(DATA_DIR, 'CCLE', 'sample_info.csv')
@@ -182,6 +193,11 @@ def stat_CCLE_Proteomics():
     '--output ', os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'figs', 'stats_CCLE_Proteomics_sample_info.png').replace(' ', '\ '),
     ])
     process = subprocess.Popen(r_cmd, shell=True).wait()
+
+    dst = os.path.join(DATA_DIR, 'Annotation', 'html_template', 'figs', 'index_file')
+    os.makedirs(dst, exist_ok=True)
+    shutil.copyfile(src=os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'figs', 'stats_CCLE_Proteomics_sample_info.png').replace(' ', '\ '),
+    dst=os.path.join(dst, 'stats_CCLE_Proteomics_sample_info.png'))
 
 def analyze():
     stat_CCLE_Exprsn()

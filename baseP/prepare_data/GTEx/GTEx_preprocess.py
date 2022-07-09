@@ -13,6 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import subprocess
+import shutil
 
 from baseP.configs.data_configs import DATA_DIR, DATA_COMPUTE, HOM_MouseHumanSequence
 from baseP.prepare_data.prepare_utils import txt_2_json, txt_2_datatables
@@ -56,7 +57,7 @@ def stat_GTEx_Exprsn():
     # process = subprocess.Popen(r_cmd, shell=True).wait()
     
     # Figure Size
-    fig, ax = plt.subplots(figsize =(16, 8))
+    fig, ax = plt.subplots(figsize =(10, 12))
 
     # Horizontal Bar Plot
     ax.barh(df_out['individual'], df_out['value'])
@@ -85,7 +86,7 @@ def stat_GTEx_Exprsn():
     for i in ax.patches:
         plt.text(i.get_width()+0.2, i.get_y()+0.5,
                 str(round((i.get_width()), 2)),
-                fontsize = 10, fontweight ='bold',
+                fontsize = 12, fontweight ='bold',
                 color ='grey')
 
     # Add Plot Title
@@ -101,6 +102,11 @@ def stat_GTEx_Exprsn():
     # plt.show()
     output_file = os.path.join(DATA_COMPUTE, 'GTEx', 'sample_info', 'figs', 'stats_GTEx_Expression_sample_info.png').replace(' ', '\ ')
     fig.savefig(output_file, dpi = 300)
+
+    dst = os.path.join(DATA_DIR, 'Annotation', 'html_template', 'figs', 'index_file')
+    os.makedirs(dst, exist_ok=True)
+    shutil.copyfile(src=os.path.join(DATA_COMPUTE, 'GTEx', 'sample_info', 'figs', 'stats_GTEx_Expression_sample_info.png').replace(' ', '\ '),
+    dst=os.path.join(dst, 'stats_GTEx_Expression_sample_info.png'))
 
 
 

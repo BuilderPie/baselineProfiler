@@ -48,6 +48,8 @@ def formOutput(output):
         os.path.join(output, 'html', 'figs', 'others_evaluator'),
         os.path.join(output, 'html', 'figs', 'others_evaluator', 'Exprsn'),
 
+        os.path.join(output, 'html', 'figs', 'index_file'),
+
         os.path.join(output, 'meta'),
         os.path.join(output, 'meta', 'tables'),
         os.path.join(output, 'meta', 'tables', 'JSON'),

@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 import json
 import subprocess
-from baseP.configs.data_configs import HTML_Data
+from baseP.configs.data_configs import HTML_Data, DATA_DIR, DATA_COMPUTE
 from baseP.utils.utilsPlotly import plotly_heatmap, plotly_heatmap_wo_dendrogram
 import datetime as dt
 
@@ -47,7 +47,13 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 	### ============= update index.html ============= ###
 	replace_dict = {}
 	replace_dict['{{publish_date}}'] = publish_date
-
+	
+	replace_dict['{{htmlwidget_CCLE_Exprsn_table}}'] = open(os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'datatables', 'CCLE_Expression_sample_info.txt'),'r').read()
+	replace_dict['{{htmlwidget_CCLE_Proteomics_table}}'] = open(os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'datatables', 'CCLE_Proteomics_sample_info.txt'),'r').read()
+	replace_dict['{{htmlwidget_CCLE_CRISPR_Broad_table}}'] = open(os.path.join(DATA_COMPUTE, 'CCLE', 'sample_info', 'datatables', 'CCLE_CRISPR_Broad_sample_info.txt'),'r').read()
+	replace_dict['{{htmlwidget_More_HPA_table}}'] = open(os.path.join(DATA_COMPUTE, 'HPA', 'sample_info', 'datatables', 'HPA_Cell_Line_sample_info.txt'),'r').read()
+	replace_dict['{{htmlwidget_More_Neuro2a_table}}'] = open(os.path.join(DATA_COMPUTE, 'others', 'Exprsn_Neuro2a', 'datatables', 'Neuro2a_sample_info.txt'),'r').read()
+	
 	template_file = os.path.join(template_path, 'index.html')
 	if os.path.isfile(template_file):
 		output_file = os.path.join(output_path, 'index.html')
