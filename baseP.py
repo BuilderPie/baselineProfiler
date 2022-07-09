@@ -32,7 +32,7 @@ if __name__ == "__main__":
     parser.add_argument('-t','--threads',default=4,type=int,help='Number of threads')
     parser.add_argument('-o', '--output', default='inputed sig_name',type=str, help="Output directory")
     parser.add_argument('--html_modules', nargs='+', default=[
-                        'CCLE', 'GTEx', 'HPA'], help = "modules user selects to view in html")
+                        'CCLE', 'GTEx', 'HPA', 'others'], help = "modules user selects to view in html")
     parser.add_argument('-p', '--precompute', default=False,
                          help='pre-compute data, input could be (only) ONE of the following modules: symbols, Neuro2a, CCLE, GTEx, HPA')
     

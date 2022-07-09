@@ -127,4 +127,4 @@ data$id <- seq(1, nrow(data))
 
 p = circular_barplot_base(data)
 ggsave(filename = file.path(opt$output), plot = p, units = "in", 
-       width = 6, height = 6, dpi = 300)
+       width = 6, height = 4, dpi = 300)

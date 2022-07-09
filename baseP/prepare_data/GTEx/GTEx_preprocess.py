@@ -57,7 +57,7 @@ def stat_GTEx_Exprsn():
     # process = subprocess.Popen(r_cmd, shell=True).wait()
     
     # Figure Size
-    fig, ax = plt.subplots(figsize =(10, 12))
+    fig, ax = plt.subplots(figsize =(8, 6))
 
     # Horizontal Bar Plot
     ax.barh(df_out['individual'], df_out['value'])
@@ -71,7 +71,7 @@ def stat_GTEx_Exprsn():
     ax.yaxis.set_ticks_position('none')
 
     # Add padding between axes and labels
-    ax.xaxis.set_tick_params(pad = 5)
+    ax.xaxis.set_tick_params(pad = 0)
     ax.yaxis.set_tick_params(pad = 10)
 
     # Add x, y gridlines
@@ -86,7 +86,7 @@ def stat_GTEx_Exprsn():
     for i in ax.patches:
         plt.text(i.get_width()+0.2, i.get_y()+0.5,
                 str(round((i.get_width()), 2)),
-                fontsize = 12, fontweight ='bold',
+                fontsize = 8, fontweight ='bold',
                 color ='grey')
 
     # Add Plot Title
@@ -100,6 +100,8 @@ def stat_GTEx_Exprsn():
 
     # Show Plot
     # plt.show()
+    fig.tight_layout()
+
     output_file = os.path.join(DATA_COMPUTE, 'GTEx', 'sample_info', 'figs', 'stats_GTEx_Expression_sample_info.png').replace(' ', '\ ')
     fig.savefig(output_file, dpi = 300)
 
