@@ -108,7 +108,6 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
         if x is not None:
             sig_dict.update(x)
     
-
     #################### 3. Add lineage information to the final table ######
     sig_list = joblib.Parallel(n_jobs=threads, backend='threading')(joblib.delayed(match_lineage)(
                  sig_dict = sig_dict,

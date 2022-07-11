@@ -89,12 +89,19 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 							for x in nan_index:
 								df_index[x] = "NAN_"+str(x)
 							df.index = df_index
+						
 						include_plotlyjs = True if counter == 0 else 'cdn'
 						if exprsn_type == "Exprsn":
-							fig_CCLE = plotly_heatmap(df = df)
+							if df.shape[1]<5:
+								fig_CCLE = plotly_heatmap_wo_dendrogram(df = df)
+							else:
+								fig_CCLE = plotly_heatmap(df = df)
 							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
 						elif exprsn_type == "CRISPR_Broad":
-							fig_CCLE = plotly_heatmap(df = df, colorbar_title = "Essentiality")
+							if df.shape[1]<5:
+								fig_CCLE = plotly_heatmap_wo_dendrogram(df = df, colorbar_title = "Essentiality")
+							else:
+								fig_CCLE = plotly_heatmap(df = df, colorbar_title = "Essentiality")
 							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
 						elif exprsn_type == "Proteomics":
 							fig_CCLE = plotly_heatmap_wo_dendrogram(df = df, colorbar_title = "Abundance")
@@ -153,7 +160,10 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 							df.index = df_index
 						include_plotlyjs = True if counter == 0 else 'cdn'
 						if exprsn_type == "Exprsn":
-							fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(nTPM)")
+							if df.shape[1]<5:
+								fig_CCLE = plotly_heatmap_wo_dendrogram(df = df, colorbar_title = "log2(nTPM)")
+							else:
+								fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(nTPM)")
 							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
 						counter = 1
 
@@ -196,8 +206,12 @@ def html_build(analysis_path,template_path,output_path,name, modules_selected):
 								df_index[x] = "NAN_"+str(x)
 							df.index = df_index
 						include_plotlyjs = False # because it is already included when adding HPA figures
+
 						if exprsn_type == "Exprsn_Neuro2a":
-							fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(nTPM)")
+							if df.shape[1]<5:
+								fig_CCLE = plotly_heatmap_wo_dendrogram(df = df, colorbar_title = "log2(TPM)")
+							else:
+								fig_CCLE = plotly_heatmap(df = df, colorbar_title = "log2(TPM)")
 							replace_dict['{{'+exprsn_type+'_'+lineage+'}}'] = fig_CCLE.to_html(full_html=False, include_plotlyjs=include_plotlyjs)
 						# counter = 1
 

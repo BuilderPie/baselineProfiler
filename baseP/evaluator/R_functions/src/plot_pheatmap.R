@@ -33,8 +33,12 @@ call_pheatmap <- function(mat, output_name, height, width, ...){
 
 
 plot_heatmap <- function(exprsn, output_name, ...){
-  mat = exprsn[, c(-1,-2)]
   
+  cell_line_ind = which(colnames(exprsn) == "cell_line")
+  lineage_ind = which(colnames(exprsn) == "lineage")
+  ind_rm = c(cell_line_ind, lineage_ind)
+  ind_rm <- ind_rm[!is.na(ind_rm)]
+  mat = exprsn[, -ind_rm, drop = FALSE]
   # name empty cell line names
   rownames_prep = exprsn$cell_line
   empty_index = which(rownames_prep == "")
@@ -85,7 +89,10 @@ plot_heatmap <- function(exprsn, output_name, ...){
 if (!is.null(opt$f)){
   exprsn = read.csv(opt$f, check.names = F)
   output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', basename(opt$f)),'.png'))
-  plot_heatmap(exprsn, output_name)
+  metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
+  metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
+  
+  plot_heatmap(exprsn, output_name, cluster_rows = metric_rows, cluster_cols = metric_cols)
 }
 
 # ========================================= #
@@ -97,18 +104,22 @@ if (!is.null(opt$d)){
     if (eachFile != basename(opt$exclude)){
       exprsn = read.csv(file.path(opt$d, eachFile), check.names = F)
       output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', eachFile),'.png'))
-      metric = ifelse(dim(exprsn)>3, TRUE, FALSE)
+      metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
+      metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
+      
       if (dim(exprsn)[1]>100){
         show_metric = FALSE
       } else {
         show_metric = opt$show_row_labels
       }
-      plot_heatmap(exprsn, output_name, show_rownames = show_metric, cluster_rows = metric, cluster_cols = metric)
+      plot_heatmap(exprsn, output_name, show_rownames = show_metric, cluster_rows = metric_rows, cluster_cols = metric_cols)
     } else {
       exprsn = read.csv(file.path(opt$d, eachFile), check.names = F)
       output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', eachFile),'.png'))
-      metric = ifelse(dim(exprsn)>2, TRUE, FALSE)
-      plot_heatmap(exprsn, output_name, show_rownames = T, cluster_rows = metric, cluster_cols = metric)
+      metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
+      metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
+      
+      plot_heatmap(exprsn, output_name, show_rownames = T, cluster_rows = metric_rows, cluster_cols = metric_cols)
     }
   }
   # plot combined expression file, without the specified "--exclude" file
@@ -121,7 +132,10 @@ if (!is.null(opt$d)){
     })
     exprsn = do.call(rbind, exprsn)
     output_name = file.path(opt$o, paste0('heatmap_combined_lineage.png'))
-    plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = F, cluster_cols = T)
+    metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
+    metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
+    
+    plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = metric_rows, cluster_cols = metric_cols)
   }
   
 }
