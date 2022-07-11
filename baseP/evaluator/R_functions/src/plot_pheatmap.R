@@ -63,10 +63,10 @@ plot_heatmap <- function(exprsn, output_name, ...){
     width = 6+0.2*dim(mat)[2]
   } else if (dim(mat)[1] <= 200 & dim(mat)[1] > 100){
     height = 6+0.001*dim(mat)[1]
-    width = 4+0.2*dim(mat)[2]
+    width = 6+0.2*dim(mat)[2]
   } else {
     height = 6+0.0007*dim(mat)[1]
-    width = 4+0.2*dim(mat)[2]
+    width = 6+0.2*dim(mat)[2]
   }
   
   # if the lineage column exists in the expression matrix
