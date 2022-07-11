@@ -133,9 +133,9 @@ if (!is.null(opt$d)){
     exprsn = do.call(rbind, exprsn)
     output_name = file.path(opt$o, paste0('heatmap_combined_lineage.png'))
     metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
-    metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
+    # metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)
     
-    plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = metric_rows, cluster_cols = metric_cols)
+    plot_heatmap(exprsn, output_name, show_rownames = F, cluster_rows = F, cluster_cols = metric_cols)
   }
   
 }
