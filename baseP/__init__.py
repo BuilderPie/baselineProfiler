@@ -66,6 +66,85 @@ CCLE_show_lineages = {
     ]
 }
 
+# for special cases where users need to see all lineage information
+
+CCLE_show_lineages_all = {
+    "Exprsn": [
+        "adrenal_cortex",
+        "bile_duct",
+        "blood",
+        "bone",
+        "breast",
+        "central_nervous_system",
+        "cervix",
+        "colorectal",
+        "embryo",
+        "epidermoid_carcinoma",
+        "esophagus",
+        "eye",
+        "fibroblast",
+        "gastric",
+        "kidney",
+        "liver",
+        "lung",
+        "lymphocyte",
+        "ovary",
+        "pancreas",
+        "peripheral_nervous_system",
+        "plasma_cell",
+        "prostate",
+        "skin",
+        "soft_tissue",
+        "thyroid",
+        "upper_aerodigestive",
+        "urinary_tract",
+        "uterus",
+        "query_cell_lines"
+    ],
+    "CRISPR_Broad": [
+        "blood",
+        "bone",
+        "breast",
+        "central_nervous_system",
+        "colorectal",
+        "gastric",
+        "kidney",
+        "liver",
+        "lung",
+        "lymphocyte",
+        "peripheral_nervous_system",
+        "skin",
+        "query_cell_lines"
+    ],
+    "Proteomics": [
+        "Acute Myeloid Leukemia",
+        "Autonomic Ganglia",
+        "Biliary Tract",
+        "Bone",
+        "Breast",
+        "Central Nervous System",
+        "Endometrium",
+        "Haematopoietic and Lymphoid Tissue",
+        "Kidney",
+        "Large Intestine",
+        "Liver",
+        "Lung",
+        "Lymphoma",
+        "Oesophagus",
+        "Ovary",
+        "Pancreas",
+        "Pleura",
+        "Prostate",
+        "Skin",
+        "Soft Tissue",
+        "Stomach",
+        "Thyroid",
+        "Upper Aerodigestive Tract",
+        "Urinary Tract",
+        "query_cell_lines"
+    ]
+}
+
 
 #################### GTEx lineage SETTING to be plotted ####################
 GTEx_show_lineages = {
@@ -81,6 +160,42 @@ GTEx_show_lineages = {
         "Skin",
         "Small Intestine",
         "Spleen"
+    ]
+}
+
+# for special cases to show all available lineages
+GTEx_show_lineages_all = {
+    "Exprsn": [
+        "Adipose Tissue",
+        "Adrenal Gland",
+        "Bladder",
+        "Blood",
+        "Blood Vessel",
+        "Brain",
+        "Breast",
+        "Cervix Uteri",
+        "Colon",
+        "Esophagus",
+        "Fallopian Tube",
+        "Heart",
+        "Kidney",
+        "Liver",
+        "Lung",
+        "Muscle",
+        "Nerve",
+        "Ovary",
+        "Pancreas",
+        "Pituitary",
+        "Prostate",
+        "Salivary Gland",
+        "Skin",
+        "Small Intestine",
+        "Spleen",
+        "Stomach",
+        "Testis",
+        "Thyroid",
+        "Uterus",
+        "Vagina"
     ]
 }
 

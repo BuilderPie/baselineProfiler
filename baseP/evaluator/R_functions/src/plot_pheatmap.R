@@ -39,6 +39,7 @@ plot_heatmap <- function(exprsn, output_name, ...){
   ind_rm = c(cell_line_ind, lineage_ind)
   ind_rm <- ind_rm[!is.na(ind_rm)]
   mat = exprsn[, -ind_rm, drop = FALSE]
+  
   # name empty cell line names
   rownames_prep = exprsn$cell_line
   empty_index = which(rownames_prep == "")
@@ -103,6 +104,9 @@ if (!is.null(opt$d)){
   for (eachFile in files){
     if (eachFile != basename(opt$exclude)){
       exprsn = read.csv(file.path(opt$d, eachFile), check.names = F)
+      if (dim(exprsn)[1]<2 | dim(exprsn)[2]<3){
+        next
+      }
       output_name = file.path(opt$o, paste0('heatmap_', gsub('.csv', '', eachFile),'.png'))
       metric_cols = ifelse(dim(exprsn)[2]>4, TRUE, FALSE)
       metric_rows = ifelse(dim(exprsn)[1]>4, TRUE, FALSE)

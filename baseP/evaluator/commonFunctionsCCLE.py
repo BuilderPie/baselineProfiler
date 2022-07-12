@@ -25,7 +25,7 @@ import re
 import csv
 
 
-from baseP import CCLE_show_lineages
+# from baseP import CCLE_show_lineages
 
 #from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
 from baseP.configs.data_configs import CCLE_Data
@@ -68,7 +68,7 @@ def fetchSig_val_by_index(gene_ind, exprsn_type, logger, name, data_type):
             return {exprsn_type: rows,
                     exprsn_type+'_gene_name': gene_name}
 
-def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, data_type):
+def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, data_type, show_lineages):
     if data_type == 'CCLE':
         colnames = pd.read_csv(CCLE_Data[exprsn_type+"_colnames"]) # column names / cell line names of the expression matrix
         df = pd.DataFrame(data=sig_dict[exprsn_type], index = sig_dict[exprsn_type+'_gene_name']) # expression matrix to be splitted
@@ -143,7 +143,7 @@ def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, 
         ##############======================================#################
         # part 2. split by lineages
         if exprsn_type in ['Exprsn', 'CRISPR_Broad']:
-            for item in CCLE_show_lineages[exprsn_type]:
+            for item in show_lineages[exprsn_type]:
                 idx_1=np.where(np.isin(metaFile['lineage'].tolist(), item))[0]
                 meta_subset = metaFile.loc[idx_1,['DepMap_ID', 'cell_line_name', 'lineage']]
                 
@@ -164,7 +164,7 @@ def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, 
                     df_query_lineage.to_csv(os.path.join(output, exprsn_type, 'tables', item+'.csv'), index = False)
         #############======================================#################
         elif exprsn_type in ['Proteomics']:
-            for item in CCLE_show_lineages[exprsn_type]:
+            for item in show_lineages[exprsn_type]:
                 idx_1=np.where(np.isin(metaFile['lineage'].tolist(), item))[0]
                 meta_subset = metaFile.loc[idx_1,['cell_line_CCLE', 'lineage']]
 

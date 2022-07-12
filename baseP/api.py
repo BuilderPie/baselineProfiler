@@ -27,7 +27,7 @@ from baseP.configs.data_configs import DATA_DIR
 from baseP.configs.folder_configs import formOutput
 
 # def geneset(request,logger_P, name, threads, evaluators, resum, html_modules, weights):
-def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, weights):
+def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, weights, special):
     ''' Evaluate gene signature composite of a list of gene '''
     
     formOutput(request['output'])
@@ -82,13 +82,13 @@ def geneset(request,logger_P, name, threads, evaluators, html_modules, resum, we
     if 'CCLE' in evaluators:
         logger = logger_P.getChild('[CCLE]')
         logger.info('Start evaluating association of input gene list in CCLE data.')
-        CCLE.analyze(data, cell_line, output=os.path.join(request['output'],'CCLE_evaluator'), logger=logger, name=name, threads= threads)
+        CCLE.analyze(data, cell_line, output=os.path.join(request['output'],'CCLE_evaluator'), logger=logger, name=name, threads= threads, special=special)
         logger_P.info('Successfully finish CCLE evaluator.')
     
     if 'GTEx' in evaluators:
         logger = logger_P.getChild('[GTEx]')
         logger.info('Start evaluating association of input gene list in GTEx data.')
-        GTEx.analyze(data, cell_line, output=os.path.join(request['output'],'GTEx_evaluator'), logger=logger, name=name, threads= threads)
+        GTEx.analyze(data, cell_line, output=os.path.join(request['output'],'GTEx_evaluator'), logger=logger, name=name, threads= threads, special=special)
         logger_P.info('Successfully finish GTEx evaluator.')
     
     if 'HPA' in evaluators:

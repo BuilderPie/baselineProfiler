@@ -34,14 +34,14 @@ import subprocess
 
 #from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
 from baseP.configs.data_configs import GTEx_Data
-from baseP import GTEx_show_lineages
+from baseP import GTEx_show_lineages, GTEx_show_lineages_all
 
 from .commonFunctionsGTEx import * # functions for each CCLE module
 
 # from multiprocessing import Pool
 import functools
 
-def analyze(gene_list, cell_line, output,logger,name,threads):
+def analyze(gene_list, cell_line, output,logger,name,threads,special):
     """
     Pipeline to analyze input signature on current GTEx cancer types and functional datasets
     
@@ -61,7 +61,12 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     """
     exprsn_type_list = ['Exprsn']
     
-
+    # if the user doesn't specify to show all lineages, then use predefined lineages
+    if not special:
+        show_lineages = GTEx_show_lineages
+    # if user specified, then use all available lineages
+    elif "all" in special:
+        show_lineages = GTEx_show_lineages_all
     #### task list 1. Perform correlation analysis on single cohort / cancer type in Compound screeing, ####
     #### Protein array, Proteomics, CRISPR screen ####
     
@@ -100,7 +105,7 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
                  output = output,
                  logger = logger,
                  name = name,
-                 data_type = 'GTEx') for cohort in GTEx_show_lineages[exprsn_type_list[0]] )
+                 data_type = 'GTEx') for cohort in show_lineages[exprsn_type_list[0]] )
     
     # sig_dict = {}
     # for x in sig_list:

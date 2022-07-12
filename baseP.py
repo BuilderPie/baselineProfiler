@@ -34,8 +34,9 @@ if __name__ == "__main__":
     parser.add_argument('--html_modules', nargs='+', default=[
                         'CCLE', 'GTEx', 'HPA', 'others'], help = "modules user selects to view in html")
     parser.add_argument('-p', '--precompute', default=False,
-                         help='pre-compute data, input could be (only) ONE of the following modules: symbols, Neuro2a, CCLE, GTEx, HPA')
-    
+                         help='pre-compute data, input could be ONE of the following modules: symbols, Neuro2a, CCLE, GTEx, HPA')
+    parser.add_argument('--special', default=False,
+                         help='special requirement, input could be ONE of the following requirement: all (plot all CCLE and GTEx lineages)')
 
     args = parser.parse_args()
 
@@ -56,7 +57,7 @@ if __name__ == "__main__":
     
     # precompute data
     from baseP.prepare_data import prepare_data
-    print(args.precompute)
+    
     #infer secondary data
     if args.precompute:
         if "symbols".casefold() in args.precompute.casefold():
@@ -157,6 +158,6 @@ if __name__ == "__main__":
     #             evaluators=args.evaluators, name=args.sig_name, resum=args.resum, threads=args.threads, html_modules = args.html_modules, weights = weights)
     api.geneset(request=request, logger_P=geneset_logger,
                 evaluators=args.evaluators, name=args.sig_name, html_modules = args.html_modules,
-                resum=args.resum, threads=args.threads, weights = weights)
+                resum=args.resum, threads=args.threads, weights = weights, special=args.special)
     print('All results are at: ', os.path.abspath(args.output ))
 

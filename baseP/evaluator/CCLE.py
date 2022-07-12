@@ -34,13 +34,14 @@ import subprocess
 
 #from statannot import add_stat_annotation  #pip install git+https://github.com/webermarcolivier/statannot
 from baseP.configs.data_configs import CCLE_Data
+from baseP import CCLE_show_lineages, CCLE_show_lineages_all
 
 from .commonFunctionsCCLE import * # functions for each CCLE module
 
 # from multiprocessing import Pool
 import functools
 
-def analyze(gene_list, cell_line, output,logger,name,threads):
+def analyze(gene_list, cell_line, output,logger,name,threads,special):
     """
     Pipeline to analyze input signature on current CCLE cancer types and functional datasets
     
@@ -60,7 +61,12 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
     """
     exprsn_type_list = ['Exprsn', 'Proteomics', 'CRISPR_Broad']
 
-
+    # if the user doesn't specify to show all lineages, then use predefined lineages
+    if not special:
+        show_lineages = CCLE_show_lineages
+    # if user specified, then use all available lineages
+    elif "all" in special:
+        show_lineages = CCLE_show_lineages_all
     #### task list 1. Perform correlation analysis on single cohort / cancer type in Compound screeing, ####
     #### Protein array, Proteomics, CRISPR screen ####
     
@@ -111,7 +117,8 @@ def analyze(gene_list, cell_line, output,logger,name,threads):
                  output = output,
                  logger = logger,
                  name = name,
-                 data_type = 'CCLE') for exprsn_type in exprsn_type_list )
+                 data_type = 'CCLE',
+                 show_lineages = show_lineages) for exprsn_type in exprsn_type_list )
 
 
     #################### 4. generate heatmap using R package pheatmap ######
