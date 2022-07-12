@@ -88,7 +88,9 @@ def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, 
                 # index in column stripped_cell_line_name without the overlapped ones
                 idx_2_unique = idx_2[np.in1d(idx_2, idx_1, invert=True)]
                 # concatanate two dataframes in the row axis
-                meta_subset = pd.concat([metaFile.loc[idx_1,['DepMap_ID', 'cell_line_name', 'lineage']],
+                # meta_subset = pd.concat([metaFile.loc[idx_1,['DepMap_ID', 'cell_line_name', 'lineage']],
+                # metaFile.loc[idx_2_unique,['DepMap_ID', 'stripped_cell_line_name', 'lineage']].rename(columns={'stripped_cell_line_name':'cell_line_name'})], ignore_index=True)
+                meta_subset = pd.concat([metaFile.loc[idx_1,['DepMap_ID', 'stripped_cell_line_name', 'lineage']].rename(columns={'stripped_cell_line_name':'cell_line_name'}),
                 metaFile.loc[idx_2_unique,['DepMap_ID', 'stripped_cell_line_name', 'lineage']].rename(columns={'stripped_cell_line_name':'cell_line_name'})], ignore_index=True)
                 
                 # index of query cell line in the expression file
@@ -145,7 +147,9 @@ def splitSig_by_lineage(sig_dict, cell_line, exprsn_type, output, logger, name, 
         if exprsn_type in ['Exprsn', 'CRISPR_Broad']:
             for item in show_lineages[exprsn_type]:
                 idx_1=np.where(np.isin(metaFile['lineage'].tolist(), item))[0]
-                meta_subset = metaFile.loc[idx_1,['DepMap_ID', 'cell_line_name', 'lineage']]
+                # meta_subset = metaFile.loc[idx_1,['DepMap_ID', 'cell_line_name', 'lineage']]
+                meta_subset = metaFile.loc[idx_1,['DepMap_ID', 'stripped_cell_line_name', 'lineage']].rename(columns={'stripped_cell_line_name':'cell_line_name'})
+                
                 
                 # find the indices  of query lineage in the expression file
                 idx_lineage = np.where(np.isin(colnames['cell_line'].tolist(), meta_subset['DepMap_ID'].tolist()))[0]
